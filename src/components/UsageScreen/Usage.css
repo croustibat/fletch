@@ -8,11 +8,25 @@
  * app.css. */
 
 /* ── screen shell ── */
-/* No nav column here, so the back control sits atop the content column,
-   sized to its label and nudged so its text lines up with the header. */
+/* No nav column here, but the back control still sits in the top-left corner
+   where settings' nav puts it (the nav's 14px/12px padding), so leaving either
+   screen is the same reach. It lies over the content column's top padding and
+   scrolls with it, so content never slides under it. */
+.usg-screen .set-main {
+  position: relative;
+}
 .usg-screen .set-back {
-  width: fit-content;
-  margin-left: -10px;
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  margin-bottom: 0;
+}
+/* Narrow windows bring the content's left edge under the control, so the
+   content starts below it instead. */
+@media (max-width: 1080px) {
+  .usg-screen .set-content {
+    padding-top: 60px;
+  }
 }
 
 /* ── header controls ── */
@@ -151,12 +165,18 @@
   flex: 1;
   min-width: 0;
 }
+/* The id and figure columns each stack their lines. */
+.usg-prov-id > *,
+.usg-prov-nums > * {
+  display: block;
+}
+.usg-prov-id > .usg-prov-name {
+  display: flex;
+}
 .usg-prov-name {
+  gap: 5px;
   color: var(--fg-0);
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .usg-prov-sub {
   color: var(--fg-2);
@@ -164,6 +184,33 @@
 .usg-prov-nums {
   flex-shrink: 0;
   text-align: right;
+}
+/* A provider with a per-account split is a disclosure: the whole row toggles,
+   and a chevron by the name turns down while the split is open. */
+.usg-prov-toggle {
+  width: 100%;
+  text-align: left;
+}
+.usg-prov-toggle:focus-visible {
+  outline: 1px solid var(--accent-line);
+  outline-offset: 2px;
+}
+.usg-prov-chev {
+  color: var(--fg-3);
+  transition:
+    transform 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+.usg-prov-toggle:hover .usg-prov-chev {
+  color: var(--fg-1);
+}
+.usg-prov-toggle[aria-expanded="true"] .usg-prov-chev {
+  transform: rotate(90deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .usg-prov-chev {
+    transition: none;
+  }
 }
 .usg-prov-tok {
   color: var(--fg-0);
