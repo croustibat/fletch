@@ -177,6 +177,10 @@
   width: 100%;
   text-align: left;
 }
+.usg-prov-toggle:focus-visible {
+  outline: 1px solid var(--accent-line);
+  outline-offset: 2px;
+}
 .usg-prov-chev {
   color: var(--fg-3);
   transition:
