@@ -151,12 +151,18 @@
   flex: 1;
   min-width: 0;
 }
+/* The id and figure columns each stack their lines. */
+.usg-prov-id > *,
+.usg-prov-nums > * {
+  display: block;
+}
+.usg-prov-id > .usg-prov-name {
+  display: flex;
+}
 .usg-prov-name {
+  gap: 5px;
   color: var(--fg-0);
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .usg-prov-sub {
   color: var(--fg-2);
@@ -164,6 +170,29 @@
 .usg-prov-nums {
   flex-shrink: 0;
   text-align: right;
+}
+/* A provider with a per-account split is a disclosure: the whole row toggles,
+   and a chevron by the name turns down while the split is open. */
+.usg-prov-toggle {
+  width: 100%;
+  text-align: left;
+}
+.usg-prov-chev {
+  color: var(--fg-3);
+  transition:
+    transform 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+.usg-prov-toggle:hover .usg-prov-chev {
+  color: var(--fg-1);
+}
+.usg-prov-toggle[aria-expanded="true"] .usg-prov-chev {
+  transform: rotate(90deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .usg-prov-chev {
+    transition: none;
+  }
 }
 .usg-prov-tok {
   color: var(--fg-0);
