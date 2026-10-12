@@ -11,11 +11,11 @@ export function UsageScreen() {
   return (
     <div className="set-screen usg-screen">
       <div className="set-main">
+        <button className="set-back flex-center text-base" onClick={close}>
+          <Icon name="chevL" size={13} />
+          <span>Back to app</span>
+        </button>
         <div className="set-content">
-          <button className="set-back flex-center text-base" onClick={close}>
-            <Icon name="chevL" size={13} />
-            <span>Back to app</span>
-          </button>
           <UsagePane />
         </div>
       </div>

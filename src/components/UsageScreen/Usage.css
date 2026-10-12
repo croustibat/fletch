@@ -8,11 +8,25 @@
  * app.css. */
 
 /* ── screen shell ── */
-/* No nav column here, so the back control sits atop the content column,
-   sized to its label and nudged so its text lines up with the header. */
+/* No nav column here, but the back control still sits in the top-left corner
+   where settings' nav puts it (the nav's 14px/12px padding), so leaving either
+   screen is the same reach. It lies over the content column's top padding and
+   scrolls with it, so content never slides under it. */
+.usg-screen .set-main {
+  position: relative;
+}
 .usg-screen .set-back {
-  width: fit-content;
-  margin-left: -10px;
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  margin-bottom: 0;
+}
+/* Narrow windows bring the content's left edge under the control, so the
+   content starts below it instead. */
+@media (max-width: 1080px) {
+  .usg-screen .set-content {
+    padding-top: 60px;
+  }
 }
 
 /* ── header controls ── */
