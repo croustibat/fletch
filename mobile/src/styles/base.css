@@ -373,6 +373,13 @@ a {
   font-size: 16px;
   letter-spacing: -0.015em;
   text-align: center;
+  /* a title can be an agent's (a prompt's first line, possibly one long URL):
+   * truncate rather than let its min-content widen the column past the phone
+   * and push the side buttons off the sheet */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .sheet-head .l {
   justify-self: start;
