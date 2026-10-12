@@ -263,6 +263,13 @@ a {
   justify-content: center;
   gap: 6px;
 }
+/* a text run inside the flex title lines that gives way (truncates) before
+ * the marks and status pieces beside it do */
+.nav .tx {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .nav .r {
   justify-self: end;
   display: flex;

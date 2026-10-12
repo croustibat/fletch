@@ -1,4 +1,5 @@
 import { Icon } from "@desktop/components/Icon";
+import { agentTitle } from "@desktop/util/agentTitle";
 import { useEffect, useRef, useState } from "react";
 import { Nav, ProviderMark, Segmented } from "../../components/ui";
 import { baseOf, branchOf, isBusy, STATUS_LABEL } from "../../lib/agents";
@@ -142,13 +143,21 @@ export function AgentScreen({ agentId, tab: initialTab }: { agentId: string; tab
       <Nav
         onBack={pop}
         backLabel={project?.name ?? "Back"}
+        // Title over codename, as the desktop header has it: what the agent is
+        // doing leads, the codename prefixes the status line.
         title={
           <>
-            {agent.name}
+            <span className="tx">{agentTitle(agent)}</span>
             <ProviderMark id={agent.provider} />
           </>
         }
-        sub={<Subtitle agentId={agentId} />}
+        sub={
+          <>
+            <span className="tx">{agent.name}</span>
+            <span>·</span>
+            <Subtitle agentId={agentId} />
+          </>
+        }
         right={
           <button
             type="button"

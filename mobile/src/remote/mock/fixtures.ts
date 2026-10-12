@@ -75,6 +75,7 @@ export const workspace: Workspace = {
       name: "arabia",
       project_id: "prj-fletch",
       status: "running",
+      title: "Dictation model picker in general settings",
       task: "Put dictation model choice in general settings",
       repos: [repo(FLETCH_REPO, "feat/dictation-models", "main")],
     }),
@@ -91,6 +92,7 @@ export const workspace: Workspace = {
       name: "kamakura",
       project_id: "prj-fletch",
       status: "idle",
+      title: "Composer dictation follow-ups",
       task: "Enable dictation for the composer",
       repos: [
         repo(FLETCH_REPO, "fix/dictation-followups", "main", {

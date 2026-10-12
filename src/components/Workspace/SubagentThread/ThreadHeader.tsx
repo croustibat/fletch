@@ -13,8 +13,9 @@ import { Icon } from "@/components/Icon";
 import { PanelToggle } from "@/components/PanelToggle";
 import { IconButton } from "@/components/ui/IconButton";
 import { type BackgroundTask, useAppStore } from "@/store";
+import { agentTitle } from "@/util/agentTitle";
 import { useMinuteClock } from "@/util/hooks";
-import { agentTitle, type DotTone, StatusDot } from "../WorkspaceHeader";
+import { type DotTone, StatusDot } from "../WorkspaceHeader";
 import {
   type ResolvedThread,
   type ThreadState,

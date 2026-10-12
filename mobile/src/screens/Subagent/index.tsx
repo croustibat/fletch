@@ -15,6 +15,7 @@ import {
   threadType,
 } from "@desktop/adapters/shared/subagents";
 import { Icon } from "@desktop/components/Icon";
+import { agentTitle } from "@desktop/util/agentTitle";
 import { useMemo } from "react";
 import { applyPolicy, type ChatItem, getAdapter } from "../../adapters";
 import { Nav } from "../../components/ui";
@@ -57,7 +58,7 @@ export function SubagentScreen({ agentId, path: pathProp }: { agentId: string; p
   // thread for a nested one — what the previous screen's bar said.
   const parentCall =
     thread && thread.trail.length > 1 ? thread.trail[thread.trail.length - 2] : null;
-  const backLabel = parentCall ? threadLabel(parentCall) : agent.name;
+  const backLabel = parentCall ? threadLabel(parentCall) : agentTitle(agent);
   const title = thread ? threadLabel(thread.call) : "Sub-agent";
   const type = thread ? threadType(thread.call) : "";
   const status =
@@ -121,7 +122,7 @@ export function SubagentScreen({ agentId, path: pathProp }: { agentId: string; p
       <div className="thread-foot">
         <Icon name="subagent" size={13} />
         <span>
-          Read-only · sub-agents take direction from <b>{agent.name}</b>
+          Read-only · sub-agents take direction from <b>{agentTitle(agent)}</b>
         </span>
       </div>
     </>

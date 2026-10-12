@@ -1,4 +1,5 @@
 import { Icon } from "@desktop/components/Icon";
+import { agentTitle } from "@desktop/util/agentTitle";
 import { useEffect, useState } from "react";
 import { Sheet } from "../components/ui";
 import { isBusy } from "../lib/agents";
@@ -41,7 +42,7 @@ export function AgentMoreSheet({
     <Sheet
       open={open}
       onClose={onClose}
-      title={agent.name}
+      title={agentTitle(agent)}
       right={
         <button type="button" className="tbtn" onClick={onClose}>
           Done

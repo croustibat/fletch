@@ -1,5 +1,6 @@
 import type { AgentRecord } from "@desktop/api/types/agent";
 import { Icon } from "@desktop/components/Icon";
+import { agentTitle } from "@desktop/util/agentTitle";
 import type { MouseEvent } from "react";
 import { isAgentBusy, STATUS_LABEL } from "../../lib/agents";
 import { elapsedSec, fmtElapsed } from "../../lib/hooks";
@@ -61,10 +62,12 @@ export function AgentRow({
   // Where the PR stands, off the fleet-wide sweep the Home poll fills.
   const pill = prPill(pr, checks);
   const changes = diff ?? { additions: 0, deletions: 0 };
-  const excerpt =
-    agent.status === "error"
-      ? (agent.last_error ?? "Run paused")
-      : (agent.task || "No prompt yet").split("\n")[0];
+  // As on the desktop sidebar: the row leads with what the agent is doing — its
+  // own title, else the prompt's first line in a muted style — and the codename
+  // drops to the second line. An error keeps its message there too.
+  const title = agentTitle(agent);
+  const sub =
+    agent.status === "error" ? `${agent.name} · ${agent.last_error ?? "Run paused"}` : agent.name;
 
   return (
     <button type="button" className="ag" onClick={onClick}>
@@ -73,7 +76,7 @@ export function AgentRow({
       </span>
       <div className="main">
         <div className="name">
-          {agent.name}
+          <span className={`nm${agent.title ? "" : " draft"}`}>{title}</span>
           <ProviderMark id={agent.provider} />
           {badge}
           {working && (
@@ -95,7 +98,7 @@ export function AgentRow({
             </span>
           )}
         </div>
-        <div className="ex">{excerpt}</div>
+        <div className="ex">{sub}</div>
       </div>
       <div className="meta">
         {changes.additions + changes.deletions > 0 ? (
