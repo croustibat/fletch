@@ -263,6 +263,13 @@ a {
   justify-content: center;
   gap: 6px;
 }
+/* a text run inside the flex title lines that gives way (truncates) before
+ * the marks and status pieces beside it do */
+.nav .tx {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .nav .r {
   justify-self: end;
   display: flex;
@@ -366,6 +373,13 @@ a {
   font-size: 16px;
   letter-spacing: -0.015em;
   text-align: center;
+  /* a title can be an agent's (a prompt's first line, possibly one long URL):
+   * truncate rather than let its min-content widen the column past the phone
+   * and push the side buttons off the sheet */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .sheet-head .l {
   justify-self: start;

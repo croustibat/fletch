@@ -170,6 +170,23 @@
   letter-spacing: -0.01em;
   line-height: 1.25;
 }
+.ag .name > * {
+  flex-shrink: 0;
+}
+/* the work's title leads the row and can run long, so it truncates instead of
+ * pushing the provider mark and status chips off the line */
+.ag .name .nm {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* no title set yet: the prompt's first line stands in, muted as on desktop */
+.ag .name .nm.draft {
+  color: var(--fg-1);
+  font-weight: 500;
+}
 .ag .name .sl {
   font-weight: 400;
   font-size: 11.5px;

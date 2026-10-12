@@ -4,7 +4,8 @@ import { PanelToggle } from "@/components/PanelToggle";
 import { IconButton } from "@/components/ui/IconButton";
 import { useAppStore } from "@/store";
 import { useGate } from "@/store/capabilities";
-import { firstLine, formatAge } from "@/util/format";
+import { agentTitle } from "@/util/agentTitle";
+import { formatAge } from "@/util/format";
 import { useMinuteClock } from "@/util/hooks";
 import { ForkMenu } from "./ForkMenu";
 import { ViewToggle } from "./ViewToggle";
@@ -17,12 +18,6 @@ import { ViewToggle } from "./ViewToggle";
  *  and out of a thread moves nothing but the words. */
 interface Props {
   agent: AgentRecord;
-}
-
-/** What the agent is working on, as the sidebar names it: its own title once
- *  it has set one, else the first line of the prompt. */
-export function agentTitle(agent: Pick<AgentRecord, "title" | "task">): string {
-  return agent.title || firstLine(agent.task, 80) || "Untitled";
 }
 
 export function WorkspaceHeader({ agent }: Props) {
