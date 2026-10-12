@@ -4,7 +4,7 @@ import { Icon } from "@/components/Icon";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { accountLabel } from "@/data/providerAccounts";
 import { providerChip, providerLabel } from "@/data/providers";
-import { coverageLabel, type UsageAccountRow, type UsageProviderRow as Row } from "@/data/usage";
+import { coverageLabel, type UsageProviderRow as Row, type UsageAccountRow } from "@/data/usage";
 import { formatPercent, formatTokens } from "@/util/format";
 
 export const sessionsLabel = (n: number) =>
