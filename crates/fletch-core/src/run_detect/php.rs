@@ -30,9 +30,11 @@ impl RunDetector for PhpDetector {
                 .iter()
                 .any(|section| manifest.get(section).and_then(|s| s.get(name)).is_some())
         };
-        // `artisan` at the root is the reliable Laravel marker; the framework
-        // dependency covers a checkout where it was renamed or not committed.
-        let is_laravel = exists(checkout, "artisan") || requires("laravel/framework");
+        // A Laravel *application* is marked by `artisan` at the root. Requiring
+        // `laravel/framework` isn't enough: a package can depend on it (often
+        // with Testbench) and has no `artisan` to run, so it falls through to
+        // its declared test runner instead.
+        let is_laravel = exists(checkout, "artisan");
 
         let mut rows = Vec::new();
 
@@ -236,6 +238,19 @@ mod tests {
     fn artisan_file_alone_marks_laravel() {
         let cfg = detect(&[("composer.json", "{}"), ("artisan", "")]).unwrap();
         assert_eq!(val(&cfg, "test"), "php artisan test");
+    }
+
+    #[test]
+    fn laravel_package_without_artisan_uses_its_runner() {
+        // A package that requires the framework (e.g. for Testbench) has no
+        // `artisan`: it must get its declared runner, not `php artisan test`.
+        let cfg = detect(&[(
+            "composer.json",
+            r#"{"require":{"laravel/framework":"^11.0"},"require-dev":{"phpunit/phpunit":"^11.0"}}"#,
+        )])
+        .unwrap();
+        assert_eq!(val(&cfg, "test"), "vendor/bin/phpunit");
+        assert!(cfg.rows.iter().all(|r| r.id != "dev" && r.id != "port"));
     }
 
     #[test]
