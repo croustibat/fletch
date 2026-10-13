@@ -554,6 +554,30 @@ mod tests {
     }
 
     #[test]
+    fn resolve_takes_test_from_php_in_a_laravel_vite_repo() {
+        // Laravel + Vite: the lockfile-backed Node project ranks first but has
+        // no `test` script, so the tests gate takes test + install from PHP.
+        let dir = tempfile::tempdir().unwrap();
+        write(
+            dir.path(),
+            "package.json",
+            r#"{"scripts":{"dev":"vite","build":"vite build"}}"#,
+        );
+        write(dir.path(), "pnpm-lock.yaml", "");
+        write(
+            dir.path(),
+            "composer.json",
+            r#"{"require":{"laravel/framework":"^11.0"},"require-dev":{"laravel/pint":"^1"}}"#,
+        );
+        write(dir.path(), "composer.lock", "{}");
+        write(dir.path(), "artisan", "");
+        let r = resolve(dir.path(), &None, &None, &None);
+        assert_eq!(r.test.as_deref(), Some("php artisan test"));
+        assert_eq!(r.install.as_deref(), Some("composer install"));
+        assert_eq!(r.lint.as_deref(), Some("vendor/bin/pint --test"));
+    }
+
+    #[test]
     fn resolve_detects_lint_command() {
         let dir = tempfile::tempdir().unwrap();
         write(
